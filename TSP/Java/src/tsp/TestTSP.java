@@ -6,9 +6,9 @@ import java.io.File;
 
 
 /**
- * 
+ *
  * Utility class to test algorithms for the TSP.
- * Instances are loaded using methods load*. 
+ * Instances are loaded using methods load*.
  * The different methods can then be run on all these instances.
  *
  */
@@ -20,7 +20,6 @@ public class TestTSP {
     public TestTSP() {
     }
 
-	
     /**
      * Load the files of the directory into the list of files
      * @param directoryName le nom du répertoire
@@ -59,10 +58,9 @@ public class TestTSP {
     public void loadFile(String fileName){
         loadFile(new File(fileName));
     }
-	
-	
+
     /**
-     * 
+     *
      * @return a list containing the names of the files loaded
      */
     public List<String> getFileNames()
@@ -73,8 +71,20 @@ public class TestTSP {
         return fileNames;
     }
 
+    private static void printSolution(List<Integer> solution)
+    {
+        for (int k = 0; k < solution.size() - 1; ++k) {
+            int s = solution.get(k);
+            int t = solution.get(k+1);
+            System.out.println(s + " " + t);
+        }
+        System.out.println(
+            solution.get(solution.size() - 1)
+            + " " +
+            solution.get(0)
+        );
+    }
 
-    
     /**
      * Test the heuristic procedure.
      * The method will be run on each instance previously loaded.
@@ -93,13 +103,12 @@ public class TestTSP {
                 System.out.println("File not found");
             }
             double val = h.computeSolution(data.getMatrix(), soluce);
+            printSolution(soluce);
             listValues.add(val);
         }
-
         return listValues;
     }
 
-    
     /**
      * Returns the average value of the list
      */

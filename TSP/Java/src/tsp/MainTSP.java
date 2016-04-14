@@ -80,7 +80,6 @@ public class MainTSP {
     {
         List<Double> listRes;
         listRes = tt.testHeuristic(h);
-        
         System.out.println(
             "Heuristic "+h.getName()+": "+
             TestTSP.avgVal(listRes) + " on average"

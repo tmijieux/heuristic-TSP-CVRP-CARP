@@ -20,9 +20,7 @@ public class TSPData {
         scan.nextLine(); // name
         scan.nextLine(); // comment
         scan.nextLine(); // type
-        scan.next(); // dimension
-        size = scan.nextInt();
-        scan.nextLine(); // passage a la ligne
+        size = Integer.parseInt(scan.nextLine().split(":")[1].trim());
         scan.nextLine(); // edge type
         scan.nextLine(); // node coord section
 
