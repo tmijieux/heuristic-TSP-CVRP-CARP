@@ -1,0 +1,79 @@
+
+TestTSP.java,541
+public class TestTSP 16,264
+    private List<File> fileList TestTSP.fileList18,288
+    public TestTSP(TestTSP.TestTSP20,346
+    public void loadFileList(TestTSP.loadFileList28,506
+    private void loadFileList(TestTSP.loadFileList33,649
+    private void loadFile(TestTSP.loadFile46,977
+    public void loadFile(TestTSP.loadFile59,1366
+    public List<String> getFileNames(TestTSP.getFileNames68,1544
+    public List<Double> testHeuristic(TestTSP.testHeuristic84,1990
+    public static double avgVal(TestTSP.avgVal106,2629
+
+TSPData.java,308
+public class TSPData 12,274
+    private double matrix[TSPData.matrix14,298
+    private int size;TSPData.size16,369
+    public TSPData(TSPData.TSPData18,392
+    public TSPData(TSPData.TSPData73,1940
+    public double[][] getMatrix(TSPData.getMatrix83,2134
+    public int getN(TSPData.getN92,2284
+
+FarNodeInsertHeuristicTSP.java,1024
+public class FarNodeInsertHeuristicTSP 10,153
+    class WTFException FarNodeInsertHeuristicTSP.WTFException12,223
+    int n;FarNodeInsertHeuristicTSP.n14,276
+    double[][] distance;FarNodeInsertHeuristicTSP.distance15,287
+    boolean[] selected;FarNodeInsertHeuristicTSP.selected16,312
+    double[] score;FarNodeInsertHeuristicTSP.score17,336
+    int[] bestInsertPosition;FarNodeInsertHeuristicTSP.bestInsertPosition19,357
+    double bestScore;FarNodeInsertHeuristicTSP.bestScore20,387
+    int bestScoreVertex;FarNodeInsertHeuristicTSP.bestScoreVertex21,409
+    int maxScoreVertex;FarNodeInsertHeuristicTSP.maxScoreVertex23,439
+    double value FarNodeInsertHeuristicTSP.value24,463
+    public String getName(FarNodeInsertHeuristicTSP.getName26,492
+    private int[] mostDistantVertex(FarNodeInsertHeuristicTSP.mostDistantVertex31,569
+    private void computeScore(FarNodeInsertHeuristicTSP.computeScore48,1055
+    public double computeSolution(FarNodeInsertHeuristicTSP.computeSolution80,2086
+
+MainTSP.java,278
+public class MainTSP 4,37
+    private static void usage(MainTSP.usage6,61
+    private static char stringtoCode(MainTSP.stringtoCode12,216
+    public static void main(MainTSP.main54,1077
+    private static void computeAndPrintResult(MainTSP.computeAndPrintResult79,1746
+
+HeuristicTSP.java,36
+public interface HeuristicTSP9,101
+
+DecreasingArcHeuristicTSP.java,792
+public class DecreasingArcHeuristicTSP 12,317
+    int n;DecreasingArcHeuristicTSP.n14,382
+    double[][] distance;DecreasingArcHeuristicTSP.distance15,393
+    int[] toEdges;DecreasingArcHeuristicTSP.toEdges16,418
+    int[] fromEdges;DecreasingArcHeuristicTSP.fromEdges17,437
+    public String getName(DecreasingArcHeuristicTSP.getName19,459
+    private boolean addingThisOneIsProblematic(DecreasingArcHeuristicTSP.addingThisOneIsProblematic24,536
+    private List<Arc> sortedEdgeList(DecreasingArcHeuristicTSP.sortedEdgeList59,1603
+    private double selectEdges(DecreasingArcHeuristicTSP.selectEdges74,1982
+    private void buildSolution(DecreasingArcHeuristicTSP.buildSolution107,2988
+    public double computeSolution(DecreasingArcHeuristicTSP.computeSolution120,3260
+
+Arc.java,465
+class Arc 3,14
+    private int source;Arc.source5,53
+    private int target;Arc.target6,77
+    private double distance;Arc.distance7,101
+    public double getDistance(Arc.getDistance9,135
+    public Arc(Arc.Arc14,205
+    public int getSource(Arc.getSource21,380
+    public int getTarget(Arc.getTarget26,443
+    public String toString(Arc.toString31,506
+    private int normalize(Arc.normalize36,598
+    public int compareTo(Arc.compareTo41,697
+
+InsertHeuristicTSP.java,178
+public class InsertHeuristicTSP 11,154
+    public String getName(InsertHeuristicTSP.getName14,213
+    public double computeSolution(InsertHeuristicTSP.computeSolution19,283
