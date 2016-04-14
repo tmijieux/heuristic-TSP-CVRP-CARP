@@ -4,15 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * This heuristic sorts the arcs by increasing value and 
+ * This heuristic sorts the arcs by increasing value and
  * considers each arc in turn for insertion
  * An arc is inserted if and only if it does not create a subtour.
  * The method stops when a tour is obtained.
  */
-public class DecreasingArcHeuristicTSP implements HeuristicTSP
+public class DecreasingArcHeuristicTSP extends HeuristicTSP
 {
-    int n;
-    double[][] distance;
     int[] toEdges;
     int[] fromEdges;
 
@@ -20,7 +18,7 @@ public class DecreasingArcHeuristicTSP implements HeuristicTSP
     {
         return "DecreasingArc";
     }
-    
+
     private boolean addingThisOneIsProblematic(Arc e)
     {
         boolean[] alreadySeen = new boolean[n];
@@ -38,14 +36,14 @@ public class DecreasingArcHeuristicTSP implements HeuristicTSP
         /* on simule la selection de l'arc
            pour tester s'il introduit un cycle */
         toEdges[start] = current;
-        int length = 0;        
+        int length = 0;
         while (current != -1 && !alreadySeen[current]) {
             alreadySeen[current] = true;
             current = toEdges[current];
             ++ length;
         }
 
-        // on defait notre "simulation" 
+        // on defait notre "simulation"
         toEdges[start] = -1;
         if (current == -1) {
             // aucun circuit en partant de l'arc e
@@ -53,7 +51,7 @@ public class DecreasingArcHeuristicTSP implements HeuristicTSP
         }
 
         // un circuit a été trouvé, il faut vérifier sa longueur:
-        return (length != n); 
+        return (length != n);
     }
 
     private List<Arc> sortedEdgeList()
@@ -78,11 +76,7 @@ public class DecreasingArcHeuristicTSP implements HeuristicTSP
            nombre d'arètes selectionnés dans le grand tour
         */
         int selectedCount = 0;
-        
-        /**
-           n-1 : c'est l'histoire des poteaux et des barrières
-           on a n sommet dont n-1 arètes dans le grand tours
-        */
+
         int i = 0;
         while (selectedCount < n)
         {
@@ -109,31 +103,30 @@ public class DecreasingArcHeuristicTSP implements HeuristicTSP
         int i = 0;
         while (i < n && toEdges[i] == -1)
             ++i;
-        
+
         while (solution.size() < n)
         {
             solution.add(i);
             i = toEdges[i];
         }
     }
-    
+
     public double computeSolution(
         double[][] matrix, List<Integer> solution)
     {
-        n = matrix.length;
-        distance = matrix;
-        
+        this.initialize(matrix);
+
         toEdges = new int[n];
         fromEdges = new int[n];
         for (int i = 0; i < n; ++i) {
             toEdges[i] = -1;
             fromEdges[i] = -1;
         }
-        
+
         List<Arc> edges = sortedEdgeList();
         double value = selectEdges(edges);
         buildSolution(solution);
-        
+
         toEdges = null;
         fromEdges = null;
         distance = null;

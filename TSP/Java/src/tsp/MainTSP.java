@@ -85,6 +85,5 @@ public class MainTSP {
             TestTSP.avgVal(listRes) + " on average"
         );
     }
-
 }
 

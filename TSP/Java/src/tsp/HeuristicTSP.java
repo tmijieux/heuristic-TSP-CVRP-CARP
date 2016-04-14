@@ -6,16 +6,26 @@ import java.util.List;
 
  */
 
-public interface HeuristicTSP
+public abstract class HeuristicTSP
 {
     /** apply the heuristic to the TSP problem given as a matrix
-     * 
+     *
      * @param matrix : TSP data
      * @param solution an empty list that will be filled with the
-     *        solution by the method 
+     *        solution by the method
      * @return the value of the solution found
      */
-    
-    double computeSolution(double[][] matrix, List<Integer> solution);
-    String getName();
+
+    protected int n;
+    protected double[][] distance;
+
+    protected final void initialize(double[][] matrix)
+    {
+        n = matrix.length;
+        distance = matrix;
+    }
+
+    public abstract double computeSolution(
+        double[][] matrix, List<Integer> solution);
+    public abstract String getName();
 }
