@@ -40,7 +40,7 @@ public:
      * The value found for each instance is put in the list in the same
      * order the instances were entered.
      */
-    std::list<double> *testHeuristic(HeuristicTSP &h);;
+    std::list<double> *testHeuristic(HeuristicTSP &h);
         
     /**
      * Returns the average value of the list

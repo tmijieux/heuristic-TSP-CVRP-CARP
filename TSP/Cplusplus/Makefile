@@ -1,5 +1,5 @@
 OUTPUT=tsp
-CFLAGS=-std=c++11 -ggdb -g -O0
+CFLAGS=-std=c++11 -g -ggdb
 CC=g++
 
 all:

@@ -25,11 +25,17 @@ void TestTSP::loadFileList(DIR *directory)
 
 void TestTSP::loadFile(std::string filename)
 {
-    if (filename.substr(filename.find_last_of(".")) == ".tsp") {
-        fileList.push_back(new fstream(filename));
+    size_t pos = filename.find_last_of(".");
+    if (pos != string::npos && filename.substr(pos) == ".tsp") {
+        fstream *f = new fstream(filename);
+        if (!*f) {
+            perror(filename.c_str());
+            return;
+        }
+        fileList.push_back(f);
     } else {
-        cerr << "File " << filename
-             <<" not loaded (extension is not .tsp)"
+        cerr << "File '" << filename
+             <<"' not loaded (extension is not .tsp)"
              << endl;
     }
 }
@@ -62,7 +68,7 @@ list<double> *TestTSP::testHeuristic(HeuristicTSP &h)
         TSPData data(**f);
         double val;
         
-        val = h.computeSolution(data.getMatrix(), soluce);
+        val = h.computeSolution(data.getSize(), data.getMatrix(), soluce);
         printSolution(soluce);
         listValues->push_back(val);
     }

@@ -1,3 +1,6 @@
+#ifndef HEURISTICTSP_H
+#define HEURISTICTSP_H
+
 #include <vector>
 #include <string>
 
@@ -17,11 +20,21 @@ class HeuristicTSP {
 protected:
     int n;
     const double **distance;
-    virtual void initialize(int length, const double **matrix) final;
+    void initialize(int length, const double **matrix);
 
 public:
+    enum mode_t {
+        HEURISTIC_INSERT = '1',
+        HEURISTIC_DECREASING_ARC = '2',
+        HEURISTIC_FAR_NODE_INSERT = '3',
+    };
+    
     virtual double computeSolution(
-        const double **matrix, std::vector<int> &solution) = 0;
-    virtual std::string getName() = 0;
-    virtual ~HeuristicTSP() {}
+        int length, const double **matrix, std::vector<int> &solution) = 0;
+    virtual std::string getName() const = 0;
+    virtual ~HeuristicTSP() { }
+
+    static HeuristicTSP *getInstance(mode_t mode);
 };
+
+#endif //HEURISTICTSP_H
