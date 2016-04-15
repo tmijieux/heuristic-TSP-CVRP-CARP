@@ -79,10 +79,10 @@ public class TestTSP {
             System.out.println(s + " " + t);
         }
         System.out.println(
-            solution.get(solution.size() - 1)
-            + " " +
-            solution.get(0)
-        );
+                           solution.get(solution.size() - 1)
+                           + " " +
+                           solution.get(0)
+                           );
     }
 
     /**

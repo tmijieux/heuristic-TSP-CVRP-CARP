@@ -2,6 +2,7 @@ package tsp;
 
 import java.io.*;
 import java.util.Scanner;
+import java.util.Locale;
 
 /**
  * TPPData : utilities to load TSPData into a matrix from a TSP instance in the
@@ -17,6 +18,8 @@ public class TSPData {
 
     public TSPData(FileReader f) {
         Scanner scan = new Scanner(f);
+        scan.useLocale(Locale.US);
+        
         scan.nextLine(); // name
         scan.nextLine(); // comment
         scan.nextLine(); // type
@@ -34,12 +37,11 @@ public class TSPData {
 
         for (int i = 0; i < size; i++) {
             scan.nextInt();
-            x[i] = scan.nextInt();
-            y[i] = scan.nextInt();
+            x[i] = scan.nextDouble();
+            y[i] = scan.nextDouble();
         }
-		
-        scan.close();
 
+        scan.close();
         System.out.println(size);
         for (int i = 0; i < size; ++i)  {
             System.out.println(x[i] + " " +y[i]);

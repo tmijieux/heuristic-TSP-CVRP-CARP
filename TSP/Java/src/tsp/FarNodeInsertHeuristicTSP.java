@@ -47,7 +47,7 @@ public class FarNodeInsertHeuristicTSP extends HeuristicTSP {
         bestScore = 0.;
         for (int i = 0; i < n; ++i) {
             if (!selected[i]) {
-                double vertexScore = 999999999.;
+                double vertexScore = Double.MAX_VALUE;
                 for (int k = 0; k < solution.size() - 1; ++k) {
                     int from = solution.get(k);
                     int to = solution.get(k+1);

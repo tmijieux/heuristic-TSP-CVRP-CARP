@@ -94,7 +94,7 @@ public class DecreasingArcHeuristicTSP extends HeuristicTSP
             }
             ++ i;
         }
-        System.exit(0);
+        //System.exit(0);
         return value;
     }
 
