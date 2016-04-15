@@ -35,12 +35,10 @@ if __name__ == "__main__":
     if len(sys.argv) >= 2:
         for i in range(0, n):
             plt.text(x[i]+2, y[i]+2, str(i))
-
             
     for i in range(0, n):
         plt.plot( [x[s[i]], x[t[i]] ], [y[s[i]], y[t[i]] ])
 #        plt.quiver( [ x[s[i]] ], [ y[s[i]] ],
 #                    [ x[t[i]] - x[s[i]]], [y[t[i]] - y[s[i]]],
 #                    scale_units='xy', angles='xy', scale=1)
-        
     plt.show()
