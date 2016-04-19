@@ -23,14 +23,31 @@ public class VRProute {
     }
 
 
-    /* 
-     * Computes and return the savings if we want to "merge" the VRProute r with this VRProute
-     */ 
-    
-    public int computeSaving(VRProute r) {
-	return 0;
+    public int getTotalDemand() {
+        return totalDemand;
+    }
+
+
+    public int getLength() {
+        return 0;//todo
+    }
+
+    public CustomList<VRPcustomer> getCustomers() {
+        return customers;
+    }
+
+    public void mergeWith(VRProute r) {
+        this.totalDemand += r.getTotalDemand();
+        this.customers.append(r.getCustomers());
+    }
+
+    public boolean isMergeableWith(VRProute r){
+        return (totalDemand + r.getTotalDemand() )<= capacity;
     }
     
+    public String toString() {
+        return customers.toString();
+    }
     
 }
 

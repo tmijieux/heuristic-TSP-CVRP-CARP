@@ -90,7 +90,31 @@ public class CustomList<T> {
 		res += "]";
 		return res;
 	}
-	
+
+	public T get(int index) {
+		Link<T> ite = first;
+		int i = 0;
+
+		while(ite != null && i < index){
+			i++;
+			ite = ite.next;
+		}
+		
+		return ite.element;
+		
+		
+	}
+
+
+	public int getLength() {
+		Link<T> ite = first;
+		int len = 0;
+		while(ite != null){
+			len ++;
+			ite = ite.next;
+		}
+		return len;
+	}
 	
 	/**
 	 * 

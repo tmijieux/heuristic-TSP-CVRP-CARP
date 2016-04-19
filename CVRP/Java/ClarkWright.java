@@ -1,13 +1,19 @@
 package cvrp;
 
 import util.CustomList;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class ClarkWright {
 
     //change Integer with a new round//tourné class
 
     private VRPinstance vrp;
-    private CustomList<VRProute> routes;
+    private List<VRProute> routes; 
+    private List<VRProute> finalRoutes; //Holds the routes that cannot be merged anymore
+    private List<VRPsaving> toBeMerged;
+
     private int clientCount;
     double [][] distance;
 
@@ -16,6 +22,8 @@ public class ClarkWright {
 	this.vrp = vrp;
 	this.clientCount = vrp.getN();
 	this.distance = vrp.getMatrix();
+	finalRoutes = new ArrayList<VRProute>();
+
     }
     
 
@@ -24,30 +32,64 @@ public class ClarkWright {
     }
     
     public int getN() {
-	return vrp.getN();
+		return vrp.getN();
     }
     
-
-
-
-
-
     public void createRouteForEachCustomer() {
-	for (int i = 1; i < this.clientCount; i++) {
-	    VRPcustomer c = new VRPcustomer(i,vrp.getDemand(i));
-	    double cost = distance[0][i] + distance[i][0];
-	    VRProute r = new VRProute(c, cost, vrp.getCapacity());
-	}
+		for (int i = 1; i < this.clientCount; i++) {
+	    	VRPcustomer c = new VRPcustomer(i,vrp.getDemand(i));
+	    	double cost = distance[0][i] + distance[i][0];
+	    	VRProute r = new VRProute(c, cost, vrp.getCapacity());
+		}
+    }
+
+    public void keepOnlyMergeable() {
+  		VRPsaving cS;
+  		VRProute r1, r2;
+
+    	for (int i = 0; i < toBeMerged.size(); i++) {
+    		cS = toBeMerged.get(i);
+    		r1 = cS.getFirstRoute();
+    		r2 = cS.getSecondRoute();
+    		if (r1.isMergeableWith(r2)) 
+    			toBeMerged.remove(cS);
+    	}
     }
 
 
     public void buildSolution(){
-	
-	routes = new CustomList<VRProute>();
-	this.createRouteForEachCustomer();
+		routes = new ArrayList<VRProute>();
+		this.createRouteForEachCustomer();
+
+		toBeMerged = new ArrayList<VRPsaving>();
+		int rSize = routes.size();
+
+
+		while ((rSize = routes.size()) > 0) {
+
+			for (int i = 0; i < rSize; i++) {
+				VRProute r1 = routes.get(i);
+				VRProute r2 = routes.get(rSize - i);
+
+				toBeMerged.add(new VRPsaving(r1, r2)); 
+				toBeMerged.add(new VRPsaving(r2, r1)); /* Should't be done if the distance matrix is symetric */
+			}
+			this.keepOnlyMergeable();
+			Collections.sort(toBeMerged);
+			VRPsaving cS = toBeMerged.get(0);
+			VRProute r1 = cS.getFirstRoute();
+			VRProute r2 = cS.getSecondRoute();
+			r1.mergeWith(r2);
+		}
     }
     
-    
+    public void printSolution(){
+    	System.out.println("Solution");
+    	for( int i = 0; i < routes.size(); i++){
+    		System.out.println("Route " + i);
+    		(routes.get(i)).toString();
+    	}
+    }
 
 
     
@@ -68,6 +110,9 @@ public class ClarkWright {
 	}
 
 	System.out.println("Clark & Wright sur : " + args[0]);
+	cw.buildSolution();
+	cw.printSolution();
+		
 
 	
 	
