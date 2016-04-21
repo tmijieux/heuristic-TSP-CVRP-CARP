@@ -7,123 +7,206 @@ import java.util.Collections;
 
 public class ClarkWright {
 
-    //change Integer with a new round//tourné class
 
     private VRPinstance vrp;
-    private List<VRProute> routes; 
+    private static List<VRProute> routes; 
     private List<VRProute> finalRoutes; //Holds the routes that cannot be merged anymore
-    private List<VRPsaving> toBeMerged;
+    private List<VRPmerge> mergeList;
 
     private int clientCount;
     double [][] distance;
 
 
     ClarkWright(VRPinstance vrp) {
-	this.vrp = vrp;
-	this.clientCount = vrp.getN();
-	this.distance = vrp.getMatrix();
-	finalRoutes = new ArrayList<VRProute>();
-
+		this.vrp = vrp;
+		this.clientCount = vrp.getN();
+		this.distance = vrp.getMatrix();
+		finalRoutes = new ArrayList<VRProute>();
+		mergeList = new ArrayList<VRPmerge>();
     }
     
 
     public double[][] getMatrix() {
-	return	distance;
+		return	distance;
     }
     
     public int getN() {
 		return vrp.getN();
     }
+
+
+    private double computeSaving(VRProute r1, VRProute r2) {
+    	int c1 = r1.getLastCustomer().getNumber(); 
+    	int c2 = r2.getFirstCustomer().getNumber();
+		double savingValue = 0;
+
+		savingValue = r1.getCost() + r2.getCost();
+
+		return savingValue;
+    }
+
     
     public void createRouteForEachCustomer() {
-		for (int i = 1; i < this.clientCount; i++) {
+        routes = new ArrayList<VRProute>();
+		for (int i = 1; i < this.clientCount; i++) { //On compte pas le dépot dans les clients (depot =0)
 	    	VRPcustomer c = new VRPcustomer(i,vrp.getDemand(i));
 	    	double cost = distance[0][i] + distance[i][0];
 	    	VRProute r = new VRProute(c, cost, vrp.getCapacity());
+
+	    	routes.add(r);
+	    	//System.out.println("Creation client numero: " + r.toString());
 		}
     }
 
-    public void keepOnlyMergeable() {
-  		VRPsaving cS;
-  		VRProute r1, r2;
 
-    	for (int i = 0; i < toBeMerged.size(); i++) {
-    		cS = toBeMerged.get(i);
-    		r1 = cS.getFirstRoute();
-    		r2 = cS.getSecondRoute();
-    		if (r1.isMergeableWith(r2)) 
-    			toBeMerged.remove(cS);
+
+    public void initMergeList() {
+
+    	VRPmerge merge;
+    	VRProute r1, r2;
+    	double saving;
+    	int rSize = routes.size();
+
+    	for (int i = 0; i <  rSize; i++) { 
+    		for (int j = 0; j < rSize; j++) {
+    			if (i == j)
+    				continue;
+    			r1 = routes.get(i);
+    			r2 = routes.get(j);
+    			saving = computeSaving(r1,r2);
+    			merge = new VRPmerge(r1, r2, saving);
+
+    			mergeList.add(merge);
+    		}
+    	}
+    	Collections.sort(mergeList);
+    }
+
+
+    public boolean doMerge(VRPmerge merge) {
+    	VRProute r1 = merge.getFirstRoute();
+    	VRProute r2 = merge.getSecondRoute();
+
+    	if (r1.isMergeableWith(r2)) {
+    		r1.mergeWith(r2);
+    		return true;
+    	}
+    	else {
+    		//put route in the final route and delete all merge related to it
+    		return false;
     	}
     }
 
+
+    public void updateMergeList(VRPmerge mergeDone, boolean successfulyMerged) {
+    	VRProute r1;
+    	VRProute r;
+
+    	VRPmerge m;
+    	List<VRPmerge> toBeRemoved = new ArrayList<VRPmerge>();
+
+    	if (successfulyMerged) {
+    		r1 = mergeDone.getFirstRoute();
+    		int size = mergeList.size();
+    		for (int i = 0; i < size; i++) {
+    			m = mergeList.get(i);
+    			r = m.getFirstRoute();
+    			if (r.equals(r1)) {
+    				toBeRemoved.add(m);
+    			}
+
+    		}
+    	}
+
+		toBeRemoved.add(mergeDone);
+		int size = toBeRemoved.size();
+		for (int i = 0; i < size; i++) {
+			mergeList.remove(toBeRemoved.get(i));
+		}
+    }
 
     public void buildSolution(){
-		routes = new ArrayList<VRProute>();
 		this.createRouteForEachCustomer();
+		this.initMergeList();
+		printRoutes();
 
-		toBeMerged = new ArrayList<VRPsaving>();
-		int rSize = routes.size();
+		boolean success;
+		while (mergeList.size() > 0){
+			System.out.println("FirstMerge : " + mergeList.get(0));
+		//	printMergeList();
+			success = doMerge(mergeList.get(0));
+			updateMergeList(mergeList.get(0), success);
+		}
+    }	
+    
 
 
-		while ((rSize = routes.size()) > 0) {
+ /****************************************************
+  * Print functions to debug
+  ****************************************************/
 
-			for (int i = 0; i < rSize; i++) {
-				VRProute r1 = routes.get(i);
-				VRProute r2 = routes.get(rSize - i);
-
-				toBeMerged.add(new VRPsaving(r1, r2)); 
-				toBeMerged.add(new VRPsaving(r2, r1)); /* Should't be done if the distance matrix is symetric */
+    public void printMatrix() {
+		for (int i = 0; i < getN(); i++) {
+			for (int j = 0; j < getN(); j++) {
+			    System.out.print(distance[i][j] + " ");	
 			}
-			this.keepOnlyMergeable();
-			Collections.sort(toBeMerged);
-			VRPsaving cS = toBeMerged.get(0);
-			VRProute r1 = cS.getFirstRoute();
-			VRProute r2 = cS.getSecondRoute();
-			r1.mergeWith(r2);
+			System.out.println("");
 		}
     }
-    
+
     public void printSolution(){
-    	System.out.println("Solution");
-    	for( int i = 0; i < routes.size(); i++){
+    	System.out.println("Solution : " + routes.size());
+    	for( int i = 0; i < routes.size() - 1; i++){
     		System.out.println("Route " + i);
-    		(routes.get(i)).toString();
+    		VRProute r = routes.get(i);
+    		System.out.println(r);
     	}
     }
 
 
+    public void printRoutes() {
+    	for (int i = 0; i < routes.size(); i++) {
+    		System.out.println("Route num " + i);
+    		System.out.println((routes.get(i)).toString());
+		}
+	}
+	
+    public void printMergeList() {
+    	int size = mergeList.size();
+    	System.out.println("Merge Liste (" + size + " elements)");
+    	/*for (int i = 0; i < size; i ++) {
+			System.out.println("i = " + i + " -> \n" + mergeList.get(i));
+		}*/
+	}
+	
+
+
+/*******************************************************
+ * Main
+ *******************************************************/
     
     public static void main(String args[]) {
-	ClarkWright cw = null;
+		ClarkWright cw = null;
+		
+		if (args.length < 1)
+		    usage();
+		try {
+		    cw = new ClarkWright(new VRPinstance(args[0]));
+		} catch (java.io.FileNotFoundException e) {
+		    System.out.println("File not Found");
+	}
 	
-	if (args.length < 1)
-	    usage();
-	try {
-	    cw = new ClarkWright(new VRPinstance(args[0]));
-	} catch (java.io.FileNotFoundException e) {
-	    System.out.println("File not Found");
-	}
-	System.out.println("Matrice de distances");
-	double[][] matrix = cw.getMatrix();
-	for (int i = 0; i < cw.getN(); i++) {
-	    System.out.print(matrix[i][0] + " ");
-	}
 
 	System.out.println("Clark & Wright sur : " + args[0]);
-	cw.buildSolution();
-	cw.printSolution();
-		
-
-	
-	
-	
+		cw.buildSolution();
+		cw.printSolution();	
     }
 
 
     
     public static  void usage() {
-	System.out.println("Usage: ClarkWright path/to/instance");
-	System.exit(1);
+		System.out.println("Usage: ClarkWright path/to/instance");
+		System.exit(1);
     }
     
     

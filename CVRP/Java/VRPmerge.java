@@ -1,12 +1,12 @@
 package cvrp;
 
 
-public class VRPsaving implements Comparable<VRPsaving>{
+public class VRPmerge implements Comparable<VRPmerge>{
 	private VRProute r1,r2;
 	private double saving;
 	private int jointDemand;
 
-	public VRPsaving(VRProute r1, VRProute r2, double saving) {
+	public VRPmerge(VRProute r1, VRProute r2, double saving) {
 		this.r1 = r1;
 		this.r2 = r2;
 		this.saving = saving;
@@ -28,7 +28,7 @@ public class VRPsaving implements Comparable<VRPsaving>{
 		return r2;
 	}
 
-	public int compareTo(VRPsaving other) {
+	public int compareTo(VRPmerge other) {
 		if (this.saving > other.getSaving())
 			return -1;
 		else if (this.saving < other.getSaving()) 
@@ -38,7 +38,7 @@ public class VRPsaving implements Comparable<VRPsaving>{
 	}
 
 	public String toString() {
-		return "Saving :" + saving + " jointDemand : " + jointDemand; 
+		return "Route 1 :" + r1 + "\nRoute 2 :" + r2 + "\nSaving :" + saving + " jointDemand : " + jointDemand; 
 	}
 }
 

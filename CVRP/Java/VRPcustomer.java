@@ -14,4 +14,12 @@ public class VRPcustomer {
     public int getDemand() {
 	return demand;
     }
+
+    public String toString() {
+    	return Integer.toString(customerNumber);
+    }
+
+    public int getNumber() {
+        return customerNumber;
+    }
 }

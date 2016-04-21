@@ -10,11 +10,12 @@ public class VRProute {
     private int totalDemand;
 
     public VRProute(VRPcustomer firstCustomer,double initialCost, int capacity) {
-	customers = new CustomList<VRPcustomer>();
-	customers.add(firstCustomer);
-	cost = initialCost;
-	totalDemand = firstCustomer.getDemand();
-	    
+    	customers = new CustomList<VRPcustomer>();
+    	customers.add(firstCustomer);
+    	cost = initialCost;
+        this.capacity = capacity;
+    	totalDemand = firstCustomer.getDemand();
+    	    
     }
 
     public void addCustomer(VRPcustomer c){
@@ -23,7 +24,40 @@ public class VRProute {
     }
 
 
-    public int getTotalDemand() {
+
+
+    public void mergeWith(VRProute r) {
+        System.out.println("-----Gonna Merge : " + this + " With : " + r); 
+        this.totalDemand += r.getTotalDemand();
+        this.customers.append(r.getCustomers());
+        System.out.println("We have this now : " + this + "----");
+    }
+
+    public boolean isMergeableWith(VRProute r){
+        System.out.println("totalDemand = " + totalDemand + "getTotalDemand = " + r.getTotalDemand() + " = " + (totalDemand + r.getTotalDemand()));
+        return (totalDemand + r.getTotalDemand() )<= capacity;
+    }
+    
+
+    
+
+    /******************************************     
+     * getters
+     ******************************************/
+    public double getCost() { 
+        return this.cost;
+    }
+
+
+    public VRPcustomer getFirstCustomer() {
+        return customers.getFirst();
+    }
+
+    public  VRPcustomer getLastCustomer() {
+        return customers.getLast();
+    }
+
+        public int getTotalDemand() {
         return totalDemand;
     }
 
@@ -36,19 +70,10 @@ public class VRProute {
         return customers;
     }
 
-    public void mergeWith(VRProute r) {
-        this.totalDemand += r.getTotalDemand();
-        this.customers.append(r.getCustomers());
-    }
 
-    public boolean isMergeableWith(VRProute r){
-        return (totalDemand + r.getTotalDemand() )<= capacity;
-    }
-    
     public String toString() {
-        return customers.toString();
+        return customers.toString() + " totalDemand: " + totalDemand + " cost: "+ cost + " capacity: " + capacity;
     }
-    
 }
 
 
