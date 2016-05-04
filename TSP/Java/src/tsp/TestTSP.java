@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
 
-
 /**
  *
  * Utility class to test algorithms for the TSP.
@@ -12,7 +11,6 @@ import java.io.File;
  * The different methods can then be run on all these instances.
  *
  */
-
 public class TestTSP {
 
     private List<File> fileList = new ArrayList<File>();

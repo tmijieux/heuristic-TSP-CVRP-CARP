@@ -72,11 +72,9 @@ public class DecreasingArcHeuristicTSP extends HeuristicTSP
     private double selectEdges(List<Arc> edges)
     {
         double value = 0.0;
-        /**
-           nombre d'arètes selectionnés dans le grand tour
-        */
+        
+        /** nombre d'arètes selectionnés dans le grand tour  */
         int selectedCount = 0;
-
         int i = 0;
         while (selectedCount < n)
         {

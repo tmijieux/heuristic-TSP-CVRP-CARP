@@ -1,27 +1,25 @@
 package cvrp;
 
 public class VRPmerge implements Comparable<VRPmerge>{
-    private VRProute r1,r2;
+    private VRPcustomer c1, c2;
     private double saving;
-    private int jointDemand;
+    private double[][] distance;
 
-    public VRPmerge(VRProute r1, VRProute r2, double saving) {
-        this.r1 = r1;
-        this.r2 = r2;
-        this.saving = saving;
-        jointDemand = r1.getTotalDemand() + r2.getTotalDemand();
+    private void computeSaving() {
+    	int c1n = c1.getNumber();
+    	int c2n = c2.getNumber();
+        saving = distance[0][c1n] + distance[c2n][0] - distance[c1n][c2n];
+    }
+
+    public VRPmerge(double[][] distance, VRPcustomer c1, VRPcustomer c2) {
+        this.distance = distance;
+        this.c1 = c1;
+        this.c2 = c2;
+        computeSaving();
     }
 
     public double getSaving() {
         return saving;
-    }
-
-    public VRProute getFirstRoute() {
-        return r1;
-    }
-
-    public VRProute getSecondRoute() {
-        return r2;
     }
 
     public int compareTo(VRPmerge other) {
@@ -34,8 +32,18 @@ public class VRPmerge implements Comparable<VRPmerge>{
     }
 
     public String toString() {
-        return "Route 1 :" + r1 + "\nRoute 2 :" + r2 +
-            "\nSaving :" + saving + " jointDemand : " + jointDemand;
+        return "[MERGE]: c1 :" + c1 + " --> c2 :" + c2 +
+            "(saving :" + saving + ")";
+    }
+
+    VRPcustomer getCustomer1()
+    {
+        return c1;
+    }
+    
+    VRPcustomer getCustomer2()
+    {
+        return c2;
     }
 }
 

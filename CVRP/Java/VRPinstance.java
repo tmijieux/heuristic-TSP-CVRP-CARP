@@ -8,7 +8,6 @@ import java.util.Scanner;
 /**
  * VRPinstance
  */
-
 public class VRPinstance {
 
     /* distance matrix */
@@ -71,13 +70,11 @@ public class VRPinstance {
                 if (i == j) {
                     matrix[i][j] = Double.MAX_VALUE;
                 } else {
-                    matrix[i][j] = Math.sqrt((x[i] - x[j]) * (x[i] - x[j])
-                                             + (y[i] - y[j]) * (y[i] - y[j]));
+                    matrix[i][j] = Math.hypot(x[i] - x[j], y[i] - y[j]);
                     matrix[i][j] = Math.round(matrix[i][j]);
                 }
             }
         }
-
     }
 
     public VRPinstance(File f) throws java.io.FileNotFoundException {
@@ -135,30 +132,28 @@ public class VRPinstance {
         return demands[customer];
     }
 
-
-    //	public static void main(String args[]) {
-    //
-    //		VRPinstance instance = null;
-    //		try {
-    //			instance = new VRPinstance("Augerat/A-n32-k5.vrp");
-    //		} catch (java.io.FileNotFoundException e) {
-    //			System.out.println("File not found");
-    //		}
-    //
-    //		System.out.println("Matrice de distances");
-    //		double[][] matrix = instance.getMatrix();
-    //		for (int i = 0; i < instance.getN(); i++) {
-    //			System.out.print(matrix[i][0] + " ");
-    //		}
-    //		System.out.println();
-    //
-    //		int[] demands = instance.getDemands();
-    //		System.out.println("Demandes");
-    //		for(int d : demands) System.out.print(d + " ");
-    //		System.out.println();
-    //
-    //		System.out.println("Capacite : " + instance.getCapacity());
-    //
-    //	}
+    public static void main(String args[]) {
+        VRPinstance instance = null;
+        try {
+            instance = new VRPinstance("Augerat/A-n32-k5.vrp");
+        } catch (java.io.FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+    
+        System.out.println("Matrice de distances");
+        double[][] matrix = instance.getMatrix();
+        for (int i = 0; i < instance.getN(); i++) {
+            System.out.print(matrix[i][0] + " ");
+        }
+        System.out.println();
+    
+        int[] demands = instance.getDemands();
+        System.out.println("Demandes");
+        for(int d : demands) System.out.print(d + " ");
+        System.out.println();
+    
+        System.out.println("Capacite : " + instance.getCapacity());
+    
+    }
 
 }
