@@ -17,10 +17,10 @@ private:
     int bestScoreVertex;
     int maxScoreVertex;
     double value;
-    
+
     pair<int,int> mostDistantVertex();
     void computeScore(vector<int> &solution);
-    
+
 public:
     string getName() const override;
     double computeSolution(

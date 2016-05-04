@@ -16,23 +16,23 @@
 class TestTSP {
 private:
     std::vector<std::fstream*> fileList;
-                                               
+
     static void printSolution(std::vector<int> &solution);
     void loadFileList(DIR *directory);
-    
+
 public:
     /**
      * Load the files of the directory into the list of files
      * @param directoryName le nom du répertoire
      */
     void loadFileList(std::string directoryName);
-    
+
     /**
      * Load the file of name fileName into the list of instances
      * @param fileName the name of the file to load
      */
     void loadFile(std::string fileName);
-    
+
 
    /**
      * Test the heuristic procedure.
@@ -41,7 +41,7 @@ public:
      * order the instances were entered.
      */
     std::list<double> *testHeuristic(HeuristicTSP &h);
-        
+
     /**
      * Returns the average value of the list
      */

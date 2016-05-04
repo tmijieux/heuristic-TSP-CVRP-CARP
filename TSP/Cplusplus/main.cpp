@@ -38,7 +38,7 @@ static HeuristicTSP::mode_t parse_options(int &argc, char **&argv)
 {
     typedef HeuristicTSP::mode_t mode_t;
     mode_t mode = mode_t::HEURISTIC_INSERT;
-    
+
     char c;
     while ((c = getopt_long(argc, argv, "hHel", options, NULL)) != -1) {
         switch (c) {
@@ -64,7 +64,7 @@ static HeuristicTSP::mode_t parse_options(int &argc, char **&argv)
     }
     argc -= optind;
     argv += optind;
-    
+
     return mode;
 }
 
@@ -89,15 +89,15 @@ int main(int argc, char * argv[])
         usage(argv[0]);
     TestTSP tt;
     HeuristicTSP::mode_t m = parse_options(argc, argv);
-    
+
     for (int i = 0; i < argc; ++i)
         tt.loadFile(argv[i]);
-    
+
     HeuristicTSP *h = HeuristicTSP::getInstance(m);
     computeAndPrintResult(tt, *h);
-    
+
     delete h;
-    
+
     return 0;
 }
 

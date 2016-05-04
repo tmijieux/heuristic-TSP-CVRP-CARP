@@ -1,7 +1,7 @@
 #include "./DecreasingArcHeuristicTSP.hpp"
 
 
-string DecreasingArcHeuristicTSP::getName() const 
+string DecreasingArcHeuristicTSP::getName() const
 {
     return "DecreasingArc";
 }

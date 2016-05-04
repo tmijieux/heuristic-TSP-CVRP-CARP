@@ -15,7 +15,7 @@ double InsertHeuristicTSP::computeSolution(
     int current = 0;
     selected[current] = true;
     solution.push_back(current);
-    
+
     while (solution.size() < n) {
         double shortestDistance = numeric_limits<double>::max();
         int nearestVertex = -1;
@@ -32,7 +32,7 @@ double InsertHeuristicTSP::computeSolution(
         value += shortestDistance;
         solution.push_back(current);
     }
-    
+
     delete selected;
     return value;
 }

@@ -28,7 +28,7 @@ public:
         HEURISTIC_DECREASING_ARC = '2',
         HEURISTIC_FAR_NODE_INSERT = '3',
     };
-    
+
     virtual double computeSolution(
         int length, const double **matrix, std::vector<int> &solution) = 0;
     virtual std::string getName() const = 0;

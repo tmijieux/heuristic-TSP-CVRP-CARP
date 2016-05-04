@@ -39,7 +39,7 @@ void TestTSP::loadFile(std::string filename)
              << endl;
     }
 }
-    
+
 double TestTSP::avgVal(list<double> &results) {
     double avg = 0.0;
     for (auto ele = results.begin(); ele != results.end(); ++ele) {
@@ -50,7 +50,7 @@ double TestTSP::avgVal(list<double> &results) {
 
 TestTSP::TestTSP()
 {
-    
+
 }
 
 /**
@@ -62,12 +62,12 @@ TestTSP::TestTSP()
 list<double> *TestTSP::testHeuristic(HeuristicTSP &h)
 {
     list<double> *listValues = new list<double>;
-    
+
     for (auto f = fileList.begin(); f != fileList.end(); ++f) {
         vector<int> soluce;
         TSPData data(**f);
         double val;
-        
+
         val = h.computeSolution(data.getSize(), data.getMatrix(), soluce);
         printSolution(soluce);
         listValues->push_back(val);

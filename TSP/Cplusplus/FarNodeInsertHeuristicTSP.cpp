@@ -16,7 +16,7 @@ pair<int,int> FarNodeInsertHeuristicTSP::mostDistantVertex()
             }
         }
     }
-    
+
     return make_pair(max_i, max_j);
 }
 
@@ -29,7 +29,7 @@ void FarNodeInsertHeuristicTSP::computeScore(vector<int> &solution)
             for (int k = 0; k < solution.size() - 1; ++k) {
                 int from = solution[k];
                 int to = solution[k+1];
-                
+
                 double localScore = 0.;
                 const double **d = distance;
                 localScore = value - d[from][to] + d[from][i] + d[i][to];
@@ -50,6 +50,12 @@ void FarNodeInsertHeuristicTSP::computeScore(vector<int> &solution)
     }
 }
 
+static void vector_insert(vector<int> &v, int i, int value)
+{
+    vector<int>::iterator it = v.begin() + i;
+    v.insert(it, value);
+}
+
 double FarNodeInsertHeuristicTSP::computeSolution(
     int length, const double **matrix, vector<int> &solution)
 {
@@ -62,7 +68,9 @@ double FarNodeInsertHeuristicTSP::computeSolution(
 
     while (solution.size() < n) {
         computeScore(solution);
-//        solution.insert(bestInsertPosition[bestScoreVertex], bestScoreVertex);
+        vector_insert(solution, bestInsertPosition[bestScoreVertex],
+                      bestScoreVertex);
+
         selected[bestScoreVertex] = true;
         value = bestScore;
     }
@@ -73,7 +81,7 @@ double FarNodeInsertHeuristicTSP::computeSolution(
 FarNodeInsertHeuristicTSP::FarNodeInsertHeuristicTSP():
     value(0.0)
 {
-    
+
 }
 
 string FarNodeInsertHeuristicTSP::getName() const

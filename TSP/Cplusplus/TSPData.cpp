@@ -16,7 +16,7 @@ TSPData::TSPData(fstream &in)
 
     if (size < 0)
         throw string("Probably bad .tsp file");
-            
+
     matrix = new double* [size];
     for (int i = 0; i < size; i++) {
         matrix[i] = new double[size];
@@ -28,7 +28,7 @@ TSPData::TSPData(fstream &in)
 
     double *x = new double[size]; // lecture des coordonnees
     double *y = new double[size];
-    
+
     for (int i = 0; i < size; i++) {
         in >> s; // numero de ligne
         in >> x[i];
@@ -58,7 +58,7 @@ TSPData::~TSPData()
     delete[] matrix;
 }
 
-const double **TSPData::getMatrix() const 
+const double **TSPData::getMatrix() const
 {
     return (const double**) matrix;
 }
@@ -80,7 +80,7 @@ TSPData::MatrixLine TSPData::operator[](int i) const
 
 TSPData::MatrixLine::MatrixLine(double **matrix, int line):
     line(line), matrix(matrix) {}
-    
+
 double TSPData::MatrixLine::operator[](int j)
 {
     return matrix[line][j];
