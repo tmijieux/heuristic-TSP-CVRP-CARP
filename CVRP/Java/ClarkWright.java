@@ -91,7 +91,6 @@ public class ClarkWright {
     public void buildSolution() {
         createRouteForEachCustomer();
         initMergeList();
-        
         printRoutes();
         boolean success;
         while (mergeList.size() > 0){

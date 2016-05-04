@@ -74,10 +74,7 @@ public class VRPinstance {
                 if (i == j) {
                     matrix[i][j] = Double.MAX_VALUE;
                 } else {
-                    matrix[i][j] = Math.sqrt(
-                        (x[i] - x[j]) * (x[i] - x[j])
-                        + (y[i] - y[j]) * (y[i] - y[j])
-                    );
+                    matrix[i][j] = Math.hypot(x[i] - x[j], y[i] - y[j]);
                     matrix[i][j] = Math.round(matrix[i][j]);
                 }
             }
