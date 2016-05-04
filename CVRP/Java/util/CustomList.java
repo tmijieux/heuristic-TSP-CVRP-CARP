@@ -2,6 +2,7 @@ package util;
 
 import java.util.Iterator;
 
+
 /**
  * 
  * @author fclautiaux
@@ -14,6 +15,7 @@ import java.util.Iterator;
  * @param <T> Type of the elements contained in the list. 
  */
 public class CustomList<T> {
+
     Link<T> first=null;
     Link<T> last=null;
 		
@@ -22,24 +24,26 @@ public class CustomList<T> {
      */
     public CustomList(){}
 	
+	
     /**
      * 
      * Append the element at the end of this list.
      * 
      * @param element element to be added
      */
-    public void add(T element)
-    {
+    public void add(T element){
         Link<T> newLink = new Link<T>(element);
         // first element
-        if (first == null) {
+        if(first == null){
             first = newLink;
             last = newLink;
-        } else { // general case
+        }
+        else{ // general case
             last.next = newLink;
             last = newLink;
         }
     }
+	
 	
     /**
      * 
@@ -48,26 +52,31 @@ public class CustomList<T> {
      * @param toAppend
      */
     public void append(CustomList<T> toAppend){
-        if (last == null) return;
+        if(last == null) return;
 		
-        if (first == null) {
+        if(first == null){
             first = toAppend.first;
             last = toAppend.last;
-        } else {
+        }
+        else{
             last.next = toAppend.first;
             last = toAppend.last;
         }
     }
 	
     /**
+     * 
      * @return the first element of the list
      */
     public T getFirst(){return first.element;}
 	
+	
     /**
+     * 
      * @return the last element of the list
      */
     public T getLast(){return last.element;}
+	
 	
     @Override
     public String toString() {
@@ -81,28 +90,7 @@ public class CustomList<T> {
         res += "]";
         return res;
     }
-
-    public T get(int index) {
-        Link<T> ite = first;
-        int i = 0;
-
-        while(ite != null && i < index){
-            i++;
-            ite = ite.next;
-        }
-        return ite.element;
-    }
-
-
-    public int getLength() {
-        Link<T> ite = first;
-        int len = 0;
-        while(ite != null){
-            len ++;
-            ite = ite.next;
-        }
-        return len;
-    }
+	
 	
     /**
      * 
@@ -112,9 +100,12 @@ public class CustomList<T> {
         return new CustomListIterator(this);
     }
 	
-    class CustomListIterator implements Iterator<T>
-    {
+	
+    class CustomListIterator implements Iterator<T>{
+
         private Link<T> current;
+		
+	
         public CustomListIterator(CustomList<T> customList) {
             current = customList.first;
         }
@@ -130,8 +121,9 @@ public class CustomList<T> {
             current = current.next;
             return currentElement;
         }
+		
     }
-
+	
     class Link<P> {
         public T element;
         public Link<P> next = null;
@@ -139,6 +131,5 @@ public class CustomList<T> {
         public Link(T element){
             this.element = element;
         }
-		
     }
 }

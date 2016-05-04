@@ -7,6 +7,7 @@ public class VRProute {
     private double cost;
     private int capacity;
     private int totalDemand;
+    private int length;
 
     public VRProute(VRPcustomer firstCustomer, double initialCost, int capacity) {
     	customers = new CustomList<VRPcustomer>();
@@ -14,6 +15,7 @@ public class VRProute {
     	cost = initialCost;
         this.capacity = capacity;
     	totalDemand = firstCustomer.getDemand();
+        length = 1;
     }
 
     public void addCustomer(VRPcustomer c) {
@@ -26,6 +28,7 @@ public class VRProute {
         this.totalDemand += r.getTotalDemand();
         this.customers.append(r.getCustomers());
         this.cost += r.getCost() - saving;
+        this.length += r.getLength();
         System.out.println("We have this now : " + this + "----");
     }
 
@@ -58,7 +61,7 @@ public class VRProute {
     }
 
     public int getLength() {
-        return 0;//todo
+        return length;
     }
 
     public CustomList<VRPcustomer> getCustomers() {

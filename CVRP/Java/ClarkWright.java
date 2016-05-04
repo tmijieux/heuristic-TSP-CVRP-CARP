@@ -57,10 +57,8 @@ public class ClarkWright {
     public void initMergeList() {
     	VRPmerge merge;
     	VRProute r1, r2;
-    	int rSize = routes.size();
-
-    	for (int i = 1; i <  rSize; i++) {
-            for (int j = 1; j < rSize; j++) {
+    	for (int i = 1; i < clientCount; i++) {
+            for (int j = 1; j < clientCount; j++) {
                 if (i == j)
                     continue;
                 merge = new VRPmerge(distance, customers[i], customers[j]);
@@ -83,8 +81,8 @@ public class ClarkWright {
             r1.mergeWith(r2, merge.getSaving());
             routes.remove(r2);
             routeEndingByCustomer[c1] = null;
-            routeEndingByCustomer[c2] = r1;
             routeStartingByCustomer[c2] = null;
+            routeEndingByCustomer[r2.getLastCustomer().getNumber()] = r1; // NICKEL
             return true;
     	}
         return false;
@@ -124,13 +122,17 @@ public class ClarkWright {
     public void printSolution(){
     	System.out.println("Solution : " + routes.size());
         double totalCost = 0;
-    	for( int i = 0; i < routes.size() - 1; i++){
+        int count = 0;
+    	for(int i = 0; i < routes.size(); i++){
             System.out.println("Route " + i);
             VRProute r = routes.get(i);
             System.out.println(r);
             totalCost += r.getCost();
+            count += r.getLength();
     	}
         System.out.println("total cost: "+totalCost);
+        System.out.println("Expected client count: "+(clientCount-1));
+        System.out.println("total client count: "+count);
     }
 
     public void printRoutes() {
