@@ -1,6 +1,5 @@
 package cvrp;
 
-
 public class VRPcustomer {
     int customerNumber;
     int demand;
@@ -9,7 +8,6 @@ public class VRPcustomer {
 	this.demand = demand;
 	this.customerNumber = number;
     }
-
 
     public int getDemand() {
 	return demand;

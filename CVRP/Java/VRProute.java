@@ -15,7 +15,7 @@ public class VRProute {
     	cost = initialCost;
         this.capacity = capacity;
     	totalDemand = firstCustomer.getDemand();
-    	    
+
     }
 
     public void addCustomer(VRPcustomer c){
@@ -23,31 +23,28 @@ public class VRProute {
 	//add the client (update the total demand and cost)
     }
 
-
-
-
     public void mergeWith(VRProute r) {
-        System.out.println("-----Gonna Merge : " + this + " With : " + r); 
+        System.out.println("-----Gonna Merge : " + this + " With : " + r);
         this.totalDemand += r.getTotalDemand();
         this.customers.append(r.getCustomers());
         System.out.println("We have this now : " + this + "----");
     }
 
     public boolean isMergeableWith(VRProute r){
-        System.out.println("totalDemand = " + totalDemand + "getTotalDemand = " + r.getTotalDemand() + " = " + (totalDemand + r.getTotalDemand()));
+        System.out.println(
+            "totalDemand = " + totalDemand + "getTotalDemand = " +
+            r.getTotalDemand() + " = " + (totalDemand + r.getTotalDemand())
+        );
         return (totalDemand + r.getTotalDemand() )<= capacity;
     }
-    
 
-    
 
-    /******************************************     
+    /******************************************
      * getters
      ******************************************/
-    public double getCost() { 
+    public double getCost() {
         return this.cost;
     }
-
 
     public VRPcustomer getFirstCustomer() {
         return customers.getFirst();
@@ -57,7 +54,7 @@ public class VRProute {
         return customers.getLast();
     }
 
-        public int getTotalDemand() {
+    public int getTotalDemand() {
         return totalDemand;
     }
 
@@ -70,9 +67,9 @@ public class VRProute {
         return customers;
     }
 
-
     public String toString() {
-        return customers.toString() + " totalDemand: " + totalDemand + " cost: "+ cost + " capacity: " + capacity;
+        return customers.toString() + " totalDemand: " + totalDemand +
+            " cost: "+ cost + " capacity: " + capacity;
     }
 }
 
