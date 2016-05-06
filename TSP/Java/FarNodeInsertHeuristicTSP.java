@@ -91,7 +91,7 @@ public class FarNodeInsertHeuristicTSP extends HeuristicTSP {
             selected[bestScoreVertex] = true;
             value = bestScore;
         }
-
+        solution.remove(solution.size() - 1);
         return value;
     }
 }

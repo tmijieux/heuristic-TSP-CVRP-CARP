@@ -11,21 +11,32 @@ using namespace std;
 
 class FarNodeInsertHeuristicTSP : public HeuristicTSP {
 private:
-    vector<bool> selected;
-    vector<int> bestInsertPosition;
-    double bestScore;
-    int bestScoreVertex;
-    int maxScoreVertex;
-    double value;
+    class Solver : public HeuristicTSP::Solver {
+    private:
+        typedef HeuristicTSP::Solver super;
 
-    pair<int,int> mostDistantVertex();
-    void computeScore(vector<int> &solution);
+        vector<bool> selected;
+        vector<int> bestInsertPosition;
+
+        double bestScore;
+        int bestScoreVertex;
+        int maxScoreVertex;
+        double value;
+
+    public:
+        pair<int,int> mostDistantVertex();
+        void computeScore(vector<int> &solution);
+        double computeSolution(vector<int> &solution);
+        Solver(unsigned length, const double **matrix);
+    };
+
+    virtual HeuristicTSP::Solver *getSolver(
+        unsigned length, const double **matrix) override;
 
 public:
+    typedef HeuristicTSP super;
     string getName() const override;
-    double computeSolution(
-        int length, const double **matrix, vector<int> &solution);
-    FarNodeInsertHeuristicTSP();
+    FarNodeInsertHeuristicTSP() {}
 };
 
 #endif //FARNODEINSERTHEURISTICTSP_H

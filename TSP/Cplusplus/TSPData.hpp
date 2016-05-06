@@ -15,7 +15,7 @@
 
 using namespace std;
 
-class TSPData{
+class TSPData {
 private :
     /* taille de la matrice (size * size) */
     int size;
@@ -35,7 +35,7 @@ public:
 
     /* initialise la donnée TSP avec un fichier d'entrée */
     TSPData(fstream &in);
-    ~TSPData();
+    virtual ~TSPData();
 
     /* retourne la matrice de doubles */
     const double **getMatrix() const;
@@ -47,6 +47,5 @@ public:
     double getVal(int i, int j) const;
     MatrixLine operator[](int i) const;
 };
-
 
 #endif //TSPDATA_H

@@ -6,7 +6,11 @@ using namespace std;
 
 void TestTSP::printSolution(vector<int> &solution)
 {
-    for (int k = 0; k < solution.size() - 1; ++k) {
+    if (solution.size() == 0) {
+        cout << "empty solution" << endl;
+        return;
+    }
+    for (unsigned k = 0; k < solution.size()-1; ++k) {
         int s = solution[k];
         int t = solution[k+1];
         cout << s << " " << t << endl;
@@ -59,7 +63,7 @@ TestTSP::TestTSP()
  * The value found for each instance is put in the list in the same
  * order the instances were entered.
  */
-list<double> *TestTSP::testHeuristic(HeuristicTSP &h)
+list<double> *TestTSP::testHeuristic(HeuristicTSP &heur)
 {
     list<double> *listValues = new list<double>;
 
@@ -68,10 +72,9 @@ list<double> *TestTSP::testHeuristic(HeuristicTSP &h)
         TSPData data(**f);
         double val;
 
-        val = h.computeSolution(data.getSize(), data.getMatrix(), soluce);
+        val = heur(data.getSize(), data.getMatrix(), soluce);
         printSolution(soluce);
         listValues->push_back(val);
     }
     return listValues;
 }
-

@@ -6,21 +6,20 @@ TSPData::TSPData(fstream &in)
 {
     string s;
 
-    size = -1; // plus facile à débuger si bug lecture
-
+    size = -1; // plus facile à débugguer si bug lecture
     getline(in, s); // ligne de blabla
     getline(in, s); // ligne de blabla
     getline(in, s); // ligne de blabla
     in >> s; // blabla
     in >> size; // lecture de la taille
+    cout << size << endl;
 
     if (size < 0)
         throw string("Probably bad .tsp file");
 
     matrix = new double* [size];
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++)
         matrix[i] = new double[size];
-    }
 
     getline(in, s); // blabla
     getline(in, s); // blabla
@@ -33,17 +32,15 @@ TSPData::TSPData(fstream &in)
         in >> s; // numero de ligne
         in >> x[i];
         in >> y[i];
+        cout << x[i] << " " << y[i] << endl;
     }
 
     for (int i = 0; i < size; ++i) { // calcul des distances
         for (int j = 0; j < size; ++j) {
-            if (i == j) {
+            if (i == j)
                 matrix[i][j] = std::numeric_limits<double>::max();
-            } else {
-                matrix[i][j] = floor(
-                    sqrt((x[i] - x[j]) * (x[i] - x[j]) +
-                         (y[i] - y[j]) * (y[i] - y[j])) + 0.5);
-            }
+            else
+                matrix[i][j] = hypot(x[i] - x[j], y[i] - y[j]);
         }
     }
 
@@ -79,7 +76,9 @@ TSPData::MatrixLine TSPData::operator[](int i) const
 }
 
 TSPData::MatrixLine::MatrixLine(double **matrix, int line):
-    line(line), matrix(matrix) {}
+    line(line), matrix(matrix)
+{
+}
 
 double TSPData::MatrixLine::operator[](int j)
 {

@@ -21,7 +21,7 @@ def parse():
     for i in range(0, n):
         s[i], t[i] = map(int, raw_input().split())
         if ok[s[i], t[i]] == 1 or ok[t[i], s[i]]:
-            print "warning ", s[i], s[j], " chosen twice"
+            print "warning ", s[i], t[i], " chosen twice"
         else:
             ok[s[i], t[i]] = 1
             ok[t[i], s[i]] = 1

@@ -6,12 +6,15 @@ string InsertHeuristicTSP::getName() const
     return "Insert";
 }
 
-double InsertHeuristicTSP::computeSolution(
-    int length, const double **matrix, vector<int> &solution)
+InsertHeuristicTSP::Solver::Solver(unsigned length, const double **matrix)
+    :super(length, matrix), selected(length)
 {
-    this->initialize(length, matrix);
+    
+}
+
+double InsertHeuristicTSP::Solver::computeSolution(vector<int> &solution)
+{
     double value = 0.0;
-    bool *selected = new bool[length];
     int current = 0;
     selected[current] = true;
     solution.push_back(current);
@@ -19,7 +22,7 @@ double InsertHeuristicTSP::computeSolution(
     while (solution.size() < n) {
         double shortestDistance = numeric_limits<double>::max();
         int nearestVertex = -1;
-        for (int i = 0; i < n; ++i) {
+        for (unsigned i = 0; i < n; ++i) {
             if (!selected[i]) {
                 if (distance[current][i] < shortestDistance) {
                     nearestVertex = i;
@@ -33,8 +36,12 @@ double InsertHeuristicTSP::computeSolution(
         solution.push_back(current);
     }
 
-    delete selected;
     return value;
 }
 
+HeuristicTSP::Solver *InsertHeuristicTSP::getSolver(
+    unsigned length, const double **matrix)
+{
+    return new InsertHeuristicTSP::Solver(length, matrix);
+}
 

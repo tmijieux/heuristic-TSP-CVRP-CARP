@@ -1,13 +1,25 @@
 #include "./FarNodeInsertHeuristicTSP.hpp"
 #include <limits>
 
-pair<int,int> FarNodeInsertHeuristicTSP::mostDistantVertex()
+
+FarNodeInsertHeuristicTSP::Solver::Solver(
+    unsigned length, const double **matrix)
+    :super(length, matrix), selected(length),
+     bestInsertPosition(length), value(0.0)
+{
+    for (unsigned i = 0; i < length; ++i) {
+        selected[i] = false;
+        bestInsertPosition[i] = 0;
+    }
+}
+
+pair<int,int> FarNodeInsertHeuristicTSP::Solver::mostDistantVertex()
 {
     int max_i, max_j;
     double max = 0.;
 
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < i; ++j) {
+    for (unsigned i = 0; i < n; ++i) {
+        for (unsigned j = 0; j < i; ++j) {
             if (distance[i][j] + distance[j][i] > max) {
                 max = distance[i][j] + distance[j][i];
                 max_i = i;
@@ -16,17 +28,16 @@ pair<int,int> FarNodeInsertHeuristicTSP::mostDistantVertex()
             }
         }
     }
-
     return make_pair(max_i, max_j);
 }
 
-void FarNodeInsertHeuristicTSP::computeScore(vector<int> &solution)
+void FarNodeInsertHeuristicTSP::Solver::computeScore(vector<int> &solution)
 {
     bestScore = 0.;
-    for (int i = 0; i < n; ++i) {
+    for (unsigned i = 0; i < n; ++i) {
         if (!selected[i]) {
             double vertexScore = numeric_limits<double>::max();
-            for (int k = 0; k < solution.size() - 1; ++k) {
+            for (unsigned k = 0; k < solution.size() - 1; ++k) {
                 int from = solution[k];
                 int to = solution[k+1];
 
@@ -56,35 +67,33 @@ static void vector_insert(vector<int> &v, int i, int value)
     v.insert(it, value);
 }
 
-double FarNodeInsertHeuristicTSP::computeSolution(
-    int length, const double **matrix, vector<int> &solution)
+double FarNodeInsertHeuristicTSP::Solver::computeSolution(vector<int> &solution)
 {
-    this->initialize(length, matrix);
-
     pair<int,int> p = mostDistantVertex();
 
     solution.push_back(p.first); selected[p.first] = true;
     solution.push_back(p.second); selected[p.second] = true;
+    solution.push_back(p.first);
 
-    while (solution.size() < n) {
+    while (solution.size() < n+1) {
         computeScore(solution);
-        vector_insert(solution, bestInsertPosition[bestScoreVertex],
-                      bestScoreVertex);
-
+        vector_insert(
+           solution, bestInsertPosition[bestScoreVertex], bestScoreVertex);
         selected[bestScoreVertex] = true;
         value = bestScore;
     }
 
+    solution.pop_back();
     return value;
-}
-
-FarNodeInsertHeuristicTSP::FarNodeInsertHeuristicTSP():
-    value(0.0)
-{
-
 }
 
 string FarNodeInsertHeuristicTSP::getName() const
 {
     return "FarNodeInsert";
+}
+
+HeuristicTSP::Solver *FarNodeInsertHeuristicTSP::getSolver(
+    unsigned length, const double **matrix)
+{
+    return new FarNodeInsertHeuristicTSP::Solver(length, matrix);
 }
