@@ -19,21 +19,22 @@ public class VRProute {
     }
 
     public void mergeWith(VRProute r, double saving) {
-        System.err.println("-----Gonna Merge : " + this + " With : " + r);
+        System.err.println("--- Gonna Merge: [" + this + "] with: [" + r + "]");
         this.totalDemand += r.getTotalDemand();
         this.customers.append(r.getCustomers());
         this.cost += r.getCost() - saving;
         this.length += r.getLength();
-        System.err.println("We have this now : " + this + "----");
+        System.err.println("We have this now: " + this + "----");
     }
 
-    public boolean isMergeableWith(VRProute r){
-        System.err.println(
-            "totalDemand = " + totalDemand + "\ngetTotalDemand = " +
-            r.getTotalDemand() + " = " +
-            (totalDemand + r.getTotalDemand()) + "\n"
-        );
-        return (totalDemand + r.getTotalDemand()) <= capacity;
+    public boolean isMergeableWith(VRProute r) {
+        int newTotalDemand = this.totalDemand + r.getTotalDemand();
+        System.err.println("this.totalDemand = " + this.totalDemand);
+        System.err.println("r.getTotalDemand = " + r.getTotalDemand());
+        System.err.println("newTotalDemand = " + newTotalDemand);
+        System.err.println("this.capacity = " + this.capacity);
+
+        return newTotalDemand <= this.capacity;
     }
 
     /******************************************
@@ -64,7 +65,7 @@ public class VRProute {
     }
 
     public String toString() {
-        return "Route: "+ customers.toString() + " totalDemand: " + totalDemand +
-            " cost: "+ cost + " capacity: " + capacity;
+        return "Route: "+ customers.toString() + " totalDemand: " +
+            totalDemand + " cost: "+ cost + " capacity: " + capacity;
     }
 }
