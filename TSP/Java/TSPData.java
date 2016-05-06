@@ -49,17 +49,12 @@ public class TSPData {
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (i == j) {
+                if (i == j)
                     matrix[i][j] = Double.MAX_VALUE;
-                } else {
-                    matrix[i][j] = Math.sqrt(
-                        (x[i] - x[j]) * (x[i] - x[j]) +
-                        (y[i] - y[j]) * (y[i] - y[j])
-                    );
-                }
+                else 
+                    matrix[i][j] = Math.hypot(x[i] - x[j], y[i] - y[j]);
             }
         }
-
     }
 
     public TSPData(File f) throws java.io.FileNotFoundException {
@@ -93,20 +88,20 @@ public class TSPData {
         return size;
     }
 
-    //	public static void main(String args[]) {
-    //
-    //		TSPData tspd = null;
-    //		try {
-    //			tspd = new TSPData("../data/instances/a280.tsp");
-    //		} catch (java.io.FileNotFoundException e) {
-    //			System.out.println("File not found");
-    //		}
-    //
-    //		double[][] matrix = tspd.getMatrix();
-    //		for (int i = 0; i < tspd.getN(); i++) {
-    //			System.out.print(matrix[i][0] + " ");
-    //		}
-    //
-    //	}
+    public static void main(String args[]) {
+    
+        TSPData tspd = null;
+        try {
+            tspd = new TSPData("../data/instances/a280.tsp");
+        } catch (java.io.FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+    
+        double[][] matrix = tspd.getMatrix();
+        for (int i = 0; i < tspd.getN(); i++) {
+            System.out.print(matrix[i][0] + " ");
+        }
+    
+    }
 
 }
