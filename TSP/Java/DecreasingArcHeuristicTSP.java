@@ -88,7 +88,6 @@ public class DecreasingArcHeuristicTSP extends HeuristicTSP
                 toEdges[e.getSource()] = e.getTarget();
                 fromEdges[e.getTarget()] = e.getSource();
                 value += e.getDistance();
-                System.out.println(e.getSource() +" "+e.getTarget());
             }
             ++ i;
         }
