@@ -9,6 +9,7 @@ using namespace std;
 
 class DecreasingArcHeuristicTSP : public HeuristicTSP {
 private:
+    typedef HeuristicTSP super;
     class Solver : public HeuristicTSP::Solver {
     private:
         typedef HeuristicTSP::Solver super;

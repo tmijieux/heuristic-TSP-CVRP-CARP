@@ -55,7 +55,7 @@ void FarNodeInsertHeuristicTSP::Solver::computeScore(vector<int> &solution)
                 bestScore = vertexScore;
                 bestScoreVertex = i;
             }
-            if (bestScore == 0)
+            if (bestScore == 0.)
                 throw "WTFException";
         }
     }
@@ -63,8 +63,7 @@ void FarNodeInsertHeuristicTSP::Solver::computeScore(vector<int> &solution)
 
 static void vector_insert(vector<int> &v, int i, int value)
 {
-    vector<int>::iterator it = v.begin() + i;
-    v.insert(it, value);
+    v.insert(v.begin() + i, value);
 }
 
 double FarNodeInsertHeuristicTSP::Solver::computeSolution(vector<int> &solution)

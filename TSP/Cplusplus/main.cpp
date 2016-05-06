@@ -31,7 +31,7 @@ struct option options[] = {
 
 static void print_help()
 {
-    cout << "Help: -hX heuristic X (X = 1,2 or 3)" << endl;
+    cout << "Help: option '-hX' --> select heuristic X (X = 1,2 or 3)" << endl;
 }
 
 static HeuristicTSP::mode_t parse_options(int &argc, char **&argv)
@@ -52,11 +52,11 @@ static HeuristicTSP::mode_t parse_options(int &argc, char **&argv)
             exit(EXIT_SUCCESS);
             break;
         case 'e':
-            cerr << "No exact value implemented yet\n" << endl;
+            cerr << "No exact value implemented yet" << endl;
             exit(EXIT_FAILURE);
             break;
         case 'l':
-            cerr << "No lowerbound method implemented yet\n" << endl;
+            cerr << "No lowerbound method implemented yet" << endl;
             exit(EXIT_FAILURE);
             break;
         default:

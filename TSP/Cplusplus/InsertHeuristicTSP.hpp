@@ -7,8 +7,8 @@
 using namespace std;
 
 class InsertHeuristicTSP : public HeuristicTSP {
-
 private:
+    typedef HeuristicTSP super;
     class Solver : public HeuristicTSP::Solver {
     private:
         typedef HeuristicTSP::Solver super;

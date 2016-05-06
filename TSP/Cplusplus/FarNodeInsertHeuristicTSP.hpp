@@ -11,6 +11,7 @@ using namespace std;
 
 class FarNodeInsertHeuristicTSP : public HeuristicTSP {
 private:
+    typedef HeuristicTSP super;
     class Solver : public HeuristicTSP::Solver {
     private:
         typedef HeuristicTSP::Solver super;
@@ -34,7 +35,6 @@ private:
         unsigned length, const double **matrix) override;
 
 public:
-    typedef HeuristicTSP super;
     string getName() const override;
     FarNodeInsertHeuristicTSP() {}
 };

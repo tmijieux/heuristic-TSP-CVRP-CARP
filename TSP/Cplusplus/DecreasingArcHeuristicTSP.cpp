@@ -2,31 +2,6 @@
 #include <algorithm>
 #include "./DecreasingArcHeuristicTSP.hpp"
 
-DecreasingArcHeuristicTSP::Solver::Arc::Arc(int i, int j, const double **distance_)
-    :source(i), target(j), distance(distance_[i][j])
-{
-}
-
-bool DecreasingArcHeuristicTSP::Solver::Arc::compare(Arc *a, Arc *b)
-{
-    return a->distance < b->distance;
-}
-
-double DecreasingArcHeuristicTSP::Solver::Arc::getDistance()
-{
-    return distance;
-}
-
-int DecreasingArcHeuristicTSP::Solver::Arc::getSource()
-{
-    return source;
-}
-
-int DecreasingArcHeuristicTSP::Solver::Arc::getTarget()
-{
-    return target;
-}
-
 DecreasingArcHeuristicTSP::Solver::Solver(unsigned length, const double **matrix)
     :super(length, matrix), toEdges(length), fromEdges(length)
 {
@@ -46,14 +21,6 @@ void DecreasingArcHeuristicTSP::Solver::computeSortedEdges()
         }
     }
     std::sort(sortedEdges.begin(), sortedEdges.end(), Arc::compare);
-}
-
-double DecreasingArcHeuristicTSP::Solver::computeSolution(vector<int> &solution)
-{
-    computeSortedEdges();
-    double value = selectEdges();
-    buildSolution(solution);
-    return value;
 }
 
 bool DecreasingArcHeuristicTSP::Solver::addingThisOneIsProblematic(Arc *e)
@@ -88,18 +55,6 @@ bool DecreasingArcHeuristicTSP::Solver::addingThisOneIsProblematic(Arc *e)
     return length != n;
 }
 
-void DecreasingArcHeuristicTSP::Solver::buildSolution(vector<int> &solution)
-{
-    unsigned i = 0;
-    while (i < n && toEdges[i] == -1)
-        ++i;
-
-    while (solution.size() < n) {
-        solution.push_back(i);
-        i = toEdges[i];
-    }
-}
-
 double DecreasingArcHeuristicTSP::Solver::selectEdges()
 {
     double value = 0.0;
@@ -119,6 +74,26 @@ double DecreasingArcHeuristicTSP::Solver::selectEdges()
         }
         ++ i;
     }
+    return value;
+}
+
+void DecreasingArcHeuristicTSP::Solver::buildSolution(vector<int> &solution)
+{
+    unsigned i = 0;
+    while (i < n && toEdges[i] == -1)
+        ++i;
+
+    while (solution.size() < n) {
+        solution.push_back(i);
+        i = toEdges[i];
+    }
+}
+
+double DecreasingArcHeuristicTSP::Solver::computeSolution(vector<int> &solution)
+{
+    computeSortedEdges();
+    double value = selectEdges();
+    buildSolution(solution);
     return value;
 }
 
