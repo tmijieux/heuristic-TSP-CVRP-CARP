@@ -31,8 +31,7 @@ public class VRPmerge implements Comparable<VRPmerge>{
     }
 
     public String toString() {
-        return "[MERGE]: c1: " + c1 + " --> c2: " + c2 +
-            "(saving: " + saving + ")";
+        return "[MERGE]: " + c1 + " --> " + c2 + " (saving: " + saving + ")";
     }
 
     VRPcustomer getCustomer1() {

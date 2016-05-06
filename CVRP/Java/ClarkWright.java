@@ -16,7 +16,6 @@ public class ClarkWright {
     private VRPcustomer[] customers;
     private VRProute[] routeStartingByCustomer;
     private VRProute[] routeEndingByCustomer;
-
     double[][] distance;
 
     ClarkWright(VRPinstance vrp) {
@@ -41,7 +40,7 @@ public class ClarkWright {
 
     public void createRouteForEachCustomer() {
         routes = new ArrayList<VRProute>();
-        //On compte pas le dépot dans les clients (depot =0)
+        // On compte pas le dépot dans les clients (depot = 0)
         for (int i = 1; i < this.clientCount; i++) {
             VRPcustomer c = new VRPcustomer(i, vrp.getDemand(i));
             customers[i] = c;
@@ -50,7 +49,7 @@ public class ClarkWright {
             routeEndingByCustomer[i] = r;
             routeStartingByCustomer[i] = r;
             routes.add(r);
-            //System.out.println("Creation client numero: " + r.toString());
+            System.err.println("Creation client numero: " + r.toString());
         }
     }
 
@@ -88,20 +87,19 @@ public class ClarkWright {
         return false;
     }
 
-    public void buildSolution() {
+     public void buildSolution() {
         createRouteForEachCustomer();
         initMergeList();
         printRoutes();
         boolean success;
         while (mergeList.size() > 0){
             VRPmerge m = mergeList.get(0);
-            System.out.println("Next merge is: " + m);
-            // printMergeList();
-            success = doMerge(mergeList.get(0));
+            System.err.println("Next merge is: " + m);
+            success = doMerge(m);
             if (success)
-                System.out.println( m + " -- SUCCESSFULL");
+                System.err.println(m + " -- SUCCESSFULL");
             else
-                System.out.println( m + " -- FAILURE");
+                System.err.println(m + " -- FAILURE");
             mergeList.remove(0);
         }
     }
@@ -112,9 +110,9 @@ public class ClarkWright {
     public void printMatrix() {
         for (int i = 0; i < getN(); i++) {
             for (int j = 0; j < getN(); j++) {
-                System.out.print(distance[i][j] + " ");
+                System.err.print(distance[i][j] + " ");
             }
-            System.out.println("");
+            System.err.println("");
         }
     }
 
@@ -136,16 +134,8 @@ public class ClarkWright {
 
     public void printRoutes() {
     	for (int i = 0; i < routes.size(); i++) {
-            System.out.println("Route num " + i);
-            System.out.println((routes.get(i)).toString());
-        }
-    }
-
-    public void printMergeList() {
-    	int size = mergeList.size();
-    	System.out.println("Merge Liste (" + size + " elements)");
-    	for (int i = 0; i < size;i ++) {
-            System.out.println("i = " + i + " -> \n" + mergeList.get(i));
+            System.err.println("Route num " + i);
+            System.err.println((routes.get(i)).toString());
         }
     }
 
@@ -154,9 +144,10 @@ public class ClarkWright {
      *******************************************************/
     public static void main(String args[]) {
         ClarkWright cw = null;
-
+        
         if (args.length < 1)
             usage();
+        
         try {
             cw = new ClarkWright(new VRPinstance(args[0]));
         } catch (java.io.FileNotFoundException e) {
@@ -168,7 +159,7 @@ public class ClarkWright {
         cw.printSolution();
     }
 
-    public static  void usage() {
+    public static void usage() {
         System.out.println("Usage: ClarkWright path/to/instance");
         System.exit(1);
     }

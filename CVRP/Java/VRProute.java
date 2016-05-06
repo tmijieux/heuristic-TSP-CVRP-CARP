@@ -19,19 +19,19 @@ public class VRProute {
     }
 
     public void mergeWith(VRProute r, double saving) {
-        System.out.println("-----Gonna Merge : " + this + " With : " + r);
+        System.err.println("-----Gonna Merge : " + this + " With : " + r);
         this.totalDemand += r.getTotalDemand();
         this.customers.append(r.getCustomers());
         this.cost += r.getCost() - saving;
         this.length += r.getLength();
-        System.out.println("We have this now : " + this + "----");
+        System.err.println("We have this now : " + this + "----");
     }
 
     public boolean isMergeableWith(VRProute r){
-        System.out.println(
+        System.err.println(
             "totalDemand = " + totalDemand + "\ngetTotalDemand = " +
-            r.getTotalDemand() + " = " + (totalDemand + r.getTotalDemand()) +
-            "\n"
+            r.getTotalDemand() + " = " +
+            (totalDemand + r.getTotalDemand()) + "\n"
         );
         return (totalDemand + r.getTotalDemand()) <= capacity;
     }
