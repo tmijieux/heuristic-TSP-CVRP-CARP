@@ -5,7 +5,7 @@ public class MainTSP {
 
     private static void usage()
     {
-        System.out.println("Usage: TestTSP -{h1,h2,e,l} instanceName timeLimit");
+        System.out.println("Usage: TestTSP -{h1,h2,h3} instanceName");
         System.exit(1);
     }
     
@@ -41,14 +41,10 @@ public class MainTSP {
     
     /** run the test
      *
-     * Syntax : TestTSP -{h1,h2,e,l} instanceName timeLimit
+     * Syntax : TestTSP -{h1,h2,h3} instanceName 
      *
      * h1 : closest neighbor
      * h2 : arc insertion heuristic
-     * e  : branch and bound
-     * l  : lower bound
-     *
-     * Parameter timeLimit is only used when the first parameter is e
      *
      * */
     public static void main(String args[])

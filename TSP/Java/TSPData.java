@@ -89,7 +89,6 @@ public class TSPData {
     }
 
     public static void main(String args[]) {
-    
         TSPData tspd = null;
         try {
             tspd = new TSPData("../data/instances/a280.tsp");
@@ -101,7 +100,5 @@ public class TSPData {
         for (int i = 0; i < tspd.getN(); i++) {
             System.out.print(matrix[i][0] + " ");
         }
-    
     }
-
 }
