@@ -64,17 +64,12 @@ public class GiantTour {
             double cost = distance[cnum][0] + distance[0][cnum];
             VRProute r = new VRProute(c, cost, vrp.getCapacity());
 
-            if (currentRoute == null) {
+            if (currentRoute != null && currentRoute.isMergeableWith(r)) {
+                double saving = computeSaving(currentRoute, r);
+                currentRoute.mergeWith(r, saving);
+            } else {
                 routes.add(r);
                 currentRoute = r;
-            } else {
-                if (currentRoute.isMergeableWith(r)) {
-                    double saving = computeSaving(currentRoute, r);
-                    currentRoute.mergeWith(r, saving);
-                } else {
-                    routes.add(r);
-                    currentRoute = r;
-                }
             }
         }
     }
