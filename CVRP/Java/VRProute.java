@@ -18,11 +18,6 @@ public class VRProute {
         length = 1;
     }
 
-    public void addCustomer(VRPcustomer c) {
-	//TODO verify that the added demand (from c) doesn't exceed the capacity
-	//add the client (update the total demand and cost)
-    }
-
     public void mergeWith(VRProute r, double saving) {
         System.out.println("-----Gonna Merge : " + this + " With : " + r);
         this.totalDemand += r.getTotalDemand();

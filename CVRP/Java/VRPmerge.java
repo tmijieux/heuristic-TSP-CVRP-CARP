@@ -22,13 +22,12 @@ public class VRPmerge implements Comparable<VRPmerge>{
         return saving;
     }
 
+    private int normalize(double i) {
+        return (int) (i / Math.abs(i));
+    }
+
     public int compareTo(VRPmerge other) {
-        if (this.saving > other.getSaving())
-            return -1;
-        else if (this.saving < other.getSaving())
-            return 1;
-        else
-            return 0;
+        return normalize(other.getSaving() - this.saving);
     }
 
     public String toString() {
@@ -36,13 +35,11 @@ public class VRPmerge implements Comparable<VRPmerge>{
             "(saving: " + saving + ")";
     }
 
-    VRPcustomer getCustomer1()
-    {
+    VRPcustomer getCustomer1() {
         return c1;
     }
-    
-    VRPcustomer getCustomer2()
-    {
+
+    VRPcustomer getCustomer2() {
         return c2;
     }
 }

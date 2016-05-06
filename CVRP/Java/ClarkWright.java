@@ -32,7 +32,7 @@ public class ClarkWright {
     }
 
     public double[][] getMatrix() {
-        return	distance;
+        return distance;
     }
 
     public int getN() {
