@@ -78,20 +78,18 @@ public class GiantTour {
         }
 
         for (int i = 0; i < n; ++i) {
-            for (int j = i; j < n; ++j) {
-                if (i == j) {
-                    routeDemand[i][j] = demand(v[i]);
-                    cost[i][j] = distance[0][v[i]];
-
-                } else { // j > i
-                    routeDemand[i][j] = routeDemand[i][j-1] + demand(v[j]);
-
+            for (int j = i+1; j < n; ++j) {
+                routeDemand[i][j] = routeDemand[i][j-1] + demand(v[j]);
+                
+                if (j == i+1) {
+                    cost[i][j] = distance[0][v[j]]+distance[v[j]][0];
+                } else {
                     cost[i][j] = cost[i][j-1] + distance[v[j-1]][v[j]] +
                         distance[v[j]][0] - distance[v[j-1]][0];
-
-                    if (routeDemand[i][j] <= capacity)
-                        g.addEdge(v[i], v[j], cost[i][j]);
                 }
+                
+                if (routeDemand[i][j] <= capacity)
+                    g.addEdge(v[i], v[j], cost[i][j]);
             }
         }
     }
