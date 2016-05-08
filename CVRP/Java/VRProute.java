@@ -9,6 +9,26 @@ public class VRProute {
     private int totalDemand;
     private int length;
 
+
+    public VRProute(int cap) {
+        customers = new  CustomList<VRPcustomer>();
+        length = 0;
+        capacity = cap;
+        totalDemand = 0;
+        cost = 0;
+    }
+
+    public void addCustomer(int k, double[][] distance, VRPinstance vrp) {
+        VRPcustomer c = new VRPcustomer(k, vrp.getDemand(k));
+        int l = 0;
+        if (customers.iterator().hasNext())
+            l = customers.getLast().getNumber();
+        customers.add(c);
+        cost += distance[l][k] - distance[l][0] + distance[k][0];
+        ++ length;
+        totalDemand += vrp.getDemand(k);
+    }
+
     public VRProute(VRPcustomer firstCustomer, double initialCost, int capacity) {
     	customers = new CustomList<VRPcustomer>();
     	customers.add(firstCustomer);

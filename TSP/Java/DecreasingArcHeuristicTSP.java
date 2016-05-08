@@ -91,7 +91,6 @@ public class DecreasingArcHeuristicTSP extends HeuristicTSP
             }
             ++ i;
         }
-        //System.exit(0);
         return value;
     }
 
@@ -99,10 +98,9 @@ public class DecreasingArcHeuristicTSP extends HeuristicTSP
     {
         int i = 0;
         while (i < n && toEdges[i] == -1)
-            ++i;
+            ++ i;
 
-        while (solution.size() < n)
-        {
+        while (solution.size() < n) {
             solution.add(i);
             i = toEdges[i];
         }

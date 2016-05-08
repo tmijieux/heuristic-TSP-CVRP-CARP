@@ -36,6 +36,9 @@ bool DecreasingArcHeuristicTSP::Solver::addingThisOneIsProblematic(Arc *e)
          */
         return true;
     }
+
+    /* on simule la selection de l'arc
+       pour tester s'il introduit un cycle */
     toEdges[start] = current;
     unsigned length = 0;
     while (current != -1 && !alreadySeen[current]) {
@@ -43,8 +46,8 @@ bool DecreasingArcHeuristicTSP::Solver::addingThisOneIsProblematic(Arc *e)
         current = toEdges[current];
         ++ length;
     }
-    
-    // on defait notre "simulation"
+
+    // on défait notre "simulation"
     toEdges[start] = -1;
     if (current == -1) {
         // aucun circuit en partant de l'arc e --> pas de problème
@@ -72,6 +75,7 @@ double DecreasingArcHeuristicTSP::Solver::selectEdges()
             fromEdges[e->getTarget()] = e->getSource();
             value += e->getDistance();
         }
+        delete e;
         ++ i;
     }
     return value;
@@ -81,7 +85,7 @@ void DecreasingArcHeuristicTSP::Solver::buildSolution(vector<int> &solution)
 {
     unsigned i = 0;
     while (i < n && toEdges[i] == -1)
-        ++i;
+        ++ i;
 
     while (solution.size() < n) {
         solution.push_back(i);
